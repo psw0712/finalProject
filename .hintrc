@@ -9,6 +9,8 @@
       {
         "image-alt": "off"
       }
-    ]
+    ],
+    "button-type": "off",
+    "no-protocol-relative-urls": "off"
   }
 }
