@@ -76,7 +76,7 @@ public class MemberServiceImpl implements MemberService{
 		// memberAddress -> [,,]
 		
 		// 주소가 입력된 경우
-		if( inputMember.getMemberAddress().equals(",,") ) {
+		if( !inputMember.getMemberAddress().equals(",,") ) {
 			
 			// String.join("구분자", 배열)
 			// -> 배열의 모든 요소 사이에 "구분자"를 추가하여
