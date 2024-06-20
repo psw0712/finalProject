@@ -1,5 +1,7 @@
 package edu.kh.project.member.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -175,13 +177,32 @@ public class MemberController {
 		return "redirect:" + path;
 		
 		
-		
-		
-		
 	}
 	
+	@GetMapping("quickLogin")
+	public String quickLogin(
+			@RequestParam("memberEmail") String memberEmail,
+			Model model, 
+			RedirectAttributes ra
+			) {
+		
+		Member loginMember = service.quickLogin(memberEmail);
+		
+		if( loginMember == null ) {
+			ra.addFlashAttribute("message", "해당 이메일이 존재하지 않습니다.");
+		} else {
+			model.addAttribute("loginMember", loginMember);
+		}
+		
+		return "redirect:/";
+	}
 	
-	
+	@ResponseBody
+	@GetMapping("selectMemberList")
+	public List<Member> selectMemberList() {
+		
+		return service.selectMemberList();
+	}
 	
 	
 	
