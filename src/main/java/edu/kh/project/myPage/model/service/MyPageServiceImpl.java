@@ -5,6 +5,9 @@ package edu.kh.project.myPage.model.service;
 import java.io.File;
 import java.util.Map;
 
+import org.eclipse.angus.mail.imap.Utility;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,13 +20,20 @@ import lombok.RequiredArgsConstructor;
 @Service
 @Transactional(rollbackFor=Exception.class) // 모든 예외 발생 시 롤백
 @RequiredArgsConstructor
+@PropertySource("classpath:/config.properties")
 public class MyPageServiceImpl implements MyPageService{
 
 	private final MyPageMapper mapper;
 	
 	// BCrypt 암호화 객체 의존성 주입(SecurityConfig 참고)
 	private final BCryptPasswordEncoder bcrypt;
+	
+	@Value("${my.profile.web-path}")
+	private String profileWebPath;
 
+	@Value("${my.profile.folder-path}")
+	private String profileFolderPath;
+	
 	// 회원 정보 수정
 	@Override
 	public int updateInfo(Member inputMember, String[] memberAddress) {
@@ -122,5 +132,29 @@ public class MyPageServiceImpl implements MyPageService{
 		// 웹 접근 주소 : /myPage/file/a.jpg
 		
 		return "/myPage/file/" + uploadFile.getOriginalFilename();
+	}
+
+	
+	// 프로필 이미지 변경
+	@Override
+	public int profile(MultipartFile profileImg, Member loginMember) {
+		
+		// 수정할 경로
+		String updatePath = null;
+		
+		// 변경명 저장
+		String rename = null;
+		
+		// 업로드한 이미지가 있을 경우
+		// - 있을 경우 : 수정할 경로 조합 (리네임 파일명, 클라이언트 접근 경로+리네임 파일명)
+		if( !profileImg.isEmpty() ) {
+			// updatePath 조합
+			
+			// 1. 파일명 변경
+			rename = Utility.fileR
+		}
+		
+		
+		return 0;
 	}
 }

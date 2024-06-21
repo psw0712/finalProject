@@ -237,6 +237,10 @@ public class MyPageController {
 		return "myPage/myPage-fileTest";
 	}
 	
+	/**
+	 * @param uploadFile : 업로드한 파일 + 파일에 대한 내용 및 설정 내용
+	 * @return
+	 */
 	@PostMapping("file/test1")
 	public String fileUpload1(
 				@RequestParam("uploadFile") MultipartFile uploadFile,
@@ -251,6 +255,31 @@ public class MyPageController {
 		}
 		
 		return "redirect:/myPage/fileTest";
+	}
+	
+	/** 프로필 이미지 변경
+	 * 
+	 * @param profileImg
+	 * @param loginMember
+	 * @param ra
+	 * @return
+	 */
+	@PostMapping("profile")
+	public String profile(
+				@RequestParam("profileImg") MultipartFile profileImg,
+				@SessionAttribute("loginMember") Member loginMember,
+				RedirectAttributes ra
+			) {
+		
+		// 서비스 호출
+		// /myPage/profile/변경된파일명 형태의 문자열
+		// 현재 로그인한 회원의 PROFILE_IMG 컬럼값으로 수정(UPDATE)
+		int result = service.profile(profileImg, loginMember);
+		
+		
+		
+		
+		return "redirect:profile"; // 리다이렉트 - /myPage/profile (상대경로)
 	}
 	
 }
