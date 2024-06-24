@@ -35,12 +35,6 @@ public class FileConfig implements WebMvcConfigurer {
 	
 	
 	// --------------------------------------------------------
-	// 프로필 이미지
-	@Value("${my.profile.resource-handler}")
-	private String profileResourceHandler;
-	
-	@Value("${my.profile.resource-location}")
-	private String profileResourceLocation;
 	
 	
 	
@@ -56,10 +50,6 @@ public class FileConfig implements WebMvcConfigurer {
 		.addResourceHandler("/myPage/file/**") // 클라이언트 요청 주소 패턴
 		.addResourceLocations("file:///C:/uploadFiles/test/");
 		
-		// 프로필 이미지 요청 - 서버 폴더 연결 추가
-		registry
-		.addResourceHandler(profileResourceHandler)
-		.addResourceLocations(profileResourceLocation);
 		
 	}
 	
