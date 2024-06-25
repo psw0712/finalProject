@@ -3,9 +3,11 @@ package edu.kh.project.common.interceptor;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import edu.kh.project.board.model.service.BoardService;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,7 +29,12 @@ import lombok.extern.slf4j.Slf4j;
  * */
 @Slf4j
 public class BoardTypeInterceptor implements HandlerInterceptor{
+	
+	// BoardService 의존성 주입
+	@Autowired
+	private BoardService service;
 
+	// 전처리
 	@Override
 	public boolean preHandle(HttpServletRequest request, 
 							HttpServletResponse response, 
@@ -49,10 +56,10 @@ public class BoardTypeInterceptor implements HandlerInterceptor{
 					log.info("BoardTypeInterceptor - preHandle(전처리) 동작 실행");
 					
 					// boardTypeList 조회 서비스 호출
-					
+					List<Map<String, Object>> boardTypeList = service.selectBoardTypeList();
 					
 					// 조회 결과를 application scope에 추가
-					
+					application.setAttribute("boardTypeList", boardTypeList);
 				}
 				
 				return HandlerInterceptor.super.preHandle(request, response, handler);
