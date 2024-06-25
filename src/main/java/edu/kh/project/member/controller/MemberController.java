@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -179,6 +181,7 @@ public class MemberController {
 		
 	}
 	
+	// 빠른 로그인
 	@GetMapping("quickLogin")
 	public String quickLogin(
 			@RequestParam("memberEmail") String memberEmail,
@@ -197,6 +200,7 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
+	// 회원 목록 조회
 	@ResponseBody
 	@GetMapping("selectMemberList")
 	public List<Member> selectMemberList() {
@@ -206,8 +210,13 @@ public class MemberController {
 	
 	
 	
+	// 비밀번호 초기화
 	
-	
+	@ResponseBody
+	@PutMapping("resetPw")
+	public int resetPw(@RequestBody int inputNo) {
+		return service.resetPw(inputNo);
+	}
 	
 	
 	
