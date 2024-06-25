@@ -1,5 +1,7 @@
 package edu.kh.project.board.controller;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +17,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("board")
 @Slf4j
 @RequiredArgsConstructor
+//@SessionAttributes("{loginMember}")
 public class BoardController {
-
+	
 	private final BoardService service;
 	
 	/** 게시글 목록 조회
@@ -43,10 +46,15 @@ public class BoardController {
 		
 		log.debug("boardCode : " + boardCode);
 		
+		// 조회 서비스 호출 후 결과 반환
+		Map<String, Object> map = service.selectBoardList(boardCode, cp);
+		
+		model.addAttribute("pagination", map.get("pagination"));
+		model.addAttribute("boardList" , map.get("boardList"));
+		
 		
 		return "board/boardList"; // boardList.html로 forward
 	}
-	
 	
 	
 	
