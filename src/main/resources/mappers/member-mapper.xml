@@ -55,5 +55,12 @@
  		ORDER BY MEMBER_NO
  	</select>
  	
+ 	<!--  비밀번호 초기화 -->
+	<update id="resetPw">
+		UPDATE "MEMBER" SET
+		MEMBER_PW = #{encPw}
+		WHERE MEMBER_NO = #{inputNo}
+	</update>
+ 	
  	
 </mapper>

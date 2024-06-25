@@ -102,6 +102,8 @@ quickLoginBtns.forEach( (item, index) => {
 
 // -----------------------------------------------------------------------
 
+// 회원 목록 조회(비동기)
+
 // 조회 버튼
 const selectMemberList = document.querySelector("#selectMemberList");
 
@@ -149,4 +151,41 @@ selectMemberList.addEventListener("click" , () => {
             memberList.append(tr);
         });
     })
+});
+
+// ---------------------------------------------------------------
+
+/* 특정 회원 비밀번호 초기화 */
+const resetMemberNo = document.querySelector("#resetMemberNo");
+const resetPw = document.querySelector("#resetPw");
+
+resetPw.addEventListener("click", () => {
+
+    // 입력 받은 회원 번호 얻어오기
+    const inputNo = resetMemberNo.value;
+
+    if(inputNo.trim().length == 0) {
+        alert("회원 번호 입력해주세요");
+        return;
+    }
+
+    fetch("/member/resetPw", {
+        method : "PUT", // PUT : 수정 요청 방식
+        headers : {"Content-Type" : "application/json"},
+        body : inputNo
+    })
+    .then(resp => resp.text())
+    .then(result => {
+        // result == 컨트롤러로부터 반환받아 TEXT 로 파싱한 값
+        // "1", "0"
+
+        if(result > 0) {
+            alert("초기화 성공!");
+
+        }else {
+            alert("해당 회원이 존재하지 않습니다 :-(");
+
+        }
+    });
+    
 });
