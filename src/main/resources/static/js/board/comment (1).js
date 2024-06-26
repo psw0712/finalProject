@@ -160,6 +160,7 @@ const selectCommentList = () => {
 
 }
 
+selectCommentList();
 
 // -----------------------------------------------------------------------
 
@@ -187,9 +188,9 @@ addContent.addEventListener("click", e => {
 
   // ajax를 이용해 댓글 등록 요청
   const data = {
-    "commentContent" : commentContent.value,
+    "commentContent" : textarea.value,
     "boardNo"        : boardNo,
-    "memberNo"       : loginMemberNo  // 또는 Session 회원 번호 이용도 가능
+    "memberNo"       : loginMemberNo,  // 또는 Session 회원 번호 이용도 가능
   };
 
   fetch("/comment", {
@@ -224,11 +225,11 @@ const showInsertComment = (parentCommentNo, btn) => {
   // ** 답글 작성 textarea가 한 개만 열릴 수 있도록 만들기 **
   const temp = document.getElementsByClassName("commentInsertContent");
 
-  if(temp.length > 0){ // 답글 작성 textara가 이미 화면에 존재하는 경우
+  if(temp.length > 0){ // 답글 작성 textarea가 이미 화면에 존재하는 경우
 
     if(confirm("다른 답글을 작성 중입니다. 현재 댓글에 답글을 작성 하시겠습니까?")){
       temp[0].nextElementSibling.remove(); // 버튼 영역부터 삭제
-      temp[0].remove(); // textara 삭제 (기준점은 마지막에 삭제해야 된다!)
+      temp[0].remove(); // textarea 삭제 (기준점은 마지막에 삭제해야 된다!)
     
     } else{
       return; // 함수를 종료시켜 답글이 생성되지 않게함.
